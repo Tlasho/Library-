@@ -1,15 +1,15 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class Library { //library class where we can add,remove,check out and return books
       private Map<String,Book> library = new HashMap<>();
       private Map<String, Integer> mostCheckedOut = new HashMap<>();
 
-      //adds book to library
+      //adds book to library uniquely
       public void addBook(Book book){
-          library.put(book.getIsbn(),book);
+          if (!library.containsKey(book.getIsbn()))
+            library.put(book.getIsbn(),book);
+          else
+              System.out.println("The book with " + book.getIsbn() + " ISBN already exists");
       }
       //removes book in library
       public void removeBook(String isbn){
@@ -32,6 +32,15 @@ public class Library { //library class where we can add,remove,check out and ret
               mostCheckedOut.put(isbn,mostCheckedOut.getOrDefault(isbn,0) + 1);
           }
       }
+      public List<Book> allAvailableBooks(){
+          List<Book> allAvailables = new ArrayList<>();
+          for (Book book : library.values()){
+              if (!book.isCheckedOut()){
+                  allAvailables.add(book);
+              }
+          }
+          return allAvailables;
+      }
       //lets you know which book is most checked out
       public int checkOutCount(String isbn){
         return mostCheckedOut.getOrDefault(isbn,0);
@@ -39,12 +48,32 @@ public class Library { //library class where we can add,remove,check out and ret
       public int size(){
           return library.size();
       }
-      //sorts an library by using book comperator class
+      //sorts a library by using book comperator class
       public Set<Book> getSortedLibrary(){
           Set<Book> sortedLibrary = new TreeSet<>(new BookComperator());
           sortedLibrary.addAll(library.values());
           return sortedLibrary;
       }
+    //search by Author(case-nosensitively)
+    public List<Book> searchAuthor(String author){
+        List<Book> result = new ArrayList<>();
+        for (Book book : library.values()){
+            if (book.getAuthor().equalsIgnoreCase(author)){
+                result.add(book);
+            }
+        }
+        return result;
+    }
+    public String report(){
+          StringBuilder st = new StringBuilder();
+          st.append("Here is the report: ");
+          for (Book book : library.values()){
+              st.append(book.toString() + "checked out " + checkOutCount(book.getIsbn()) + " times,");
+          }
+          return st.toString();
+    }
+
+
 
 
 }

@@ -43,6 +43,6 @@ public class Book {
     }
     @Override
     public String  toString(){
-        return "[" + author + " " + " " + tittle + " " + isbn + "]";
+        return "[" + author + "-" + tittle + "-" + isbn + "]";
     }
 }

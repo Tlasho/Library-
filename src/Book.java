@@ -28,21 +28,24 @@ public class Book {
     public void setTittle(String tittle) {
         this.tittle = tittle;
     }
-    public void setCheckedOut(boolean is){
+
+    public void setCheckedOut(boolean is) {
         isCheckedOut = is;
     }
+
     public boolean isCheckedOut() {
         return isCheckedOut;
     }
 
-    public Book(String tittle, String author, String isbn){
-        this.tittle =tittle;
+    public Book(String tittle, String author, String isbn) {
+        this.tittle = tittle;
         this.author = author;
         this.isbn = isbn;
         isCheckedOut = false;
     }
+
     @Override
-    public String  toString(){
+    public String toString() {
         return "[" + author + "-" + tittle + "-" + isbn + "]";
     }
 }
